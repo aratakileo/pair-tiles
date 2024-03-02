@@ -1,0 +1,12 @@
+.tile {
+    transition: all 0.5s ease;
+    transform: scale(0.9);
+    width: 10vh;
+    height: 10vh;
+    border-radius: 10px;
+    box-shadow: 2px 2px 5px 0;
+}
+
+.tile:hover {
+    transform: scale(1);
+}
