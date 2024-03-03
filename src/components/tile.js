@@ -1,12 +1,18 @@
+import {useDispatch, useSelector} from "react-redux";
+import {onTileSelect} from "../store/tileGridSlice";
+import {getTile} from "../util";
 import './tile.css'
 
-const Tile = ({color, isFaced = true, isLocked = false}) => {
+const Tile = ({color, line, column}) => {
+    const dispatch = useDispatch();
+    const tiles = useSelector(state => state.tileGrid.tiles);
+    const tile = getTile(tiles, line, column);
+
     return (
         <div>
             <div className="tile" style={{
-                backgroundColor: color,
-                visibility: isFaced ? "visible" : "hidden"
-            }}/>
+                backgroundColor: tile.isFaced ? color : '#ffffff'
+            }} onClick={() => dispatch(onTileSelect({line, column}))}/>
         </div>
     );
 }

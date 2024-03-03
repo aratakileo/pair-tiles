@@ -1,21 +1,26 @@
 import Tile from './tile'
-import {getRandColor} from "../util";
+import {useSelector} from "react-redux";
 
-const TileGrid = ({tilesCount, cssGap}) => {
+const cssGap = '0.4vh';
+
+const TileGrid = () => {
+    const tiles = useSelector(state => state.tileGrid.tiles);
+
+    // the length of `tiles` is always equal to `tilesInLineCount * tilesInLineCount`
+    const tilesInLineCount = Math.sqrt(tiles.length);
+
     return (
         <div style={{
             display: 'grid',
             placeItems: 'center',
-            gridTemplateColumns: `repeat(${tilesCount}, 1fr)`,
-            gridTemplateRows: `repeat(${tilesCount}, 1fr)`,
+            gridTemplateColumns: `repeat(${tilesInLineCount}, 1fr)`,
+            gridTemplateRows: `repeat(${tilesInLineCount}, 1fr)`,
             gap: cssGap,
             paddingLeft: cssGap,
             paddingTop: cssGap,
-            width: `calc(${cssGap} * (2 + ${tilesCount}) + 10vh * ${tilesCount})`
+            width: `calc(${cssGap} * (2 + ${tilesInLineCount}) + 10vh * ${tilesInLineCount})`
         }}>{
-            Array.apply(null, {length: tilesCount * tilesCount}).map((e, i) => (
-                <Tile color={getRandColor()}/>
-            ))
+            tiles.map(tile => <Tile color={tile.color} line={tile.line} column={tile.column}/>)
         }</div>
     );
 }
