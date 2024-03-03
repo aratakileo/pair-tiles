@@ -1,0 +1,8 @@
+@font-face {
+    font-family: 'MvWeekend';
+    src: url("/public/font/MV-WEEKEND.otf");
+}
+
+body {
+    background-color: #282c34;
+}

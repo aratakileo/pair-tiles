@@ -1,0 +1,43 @@
+.grid-container {
+    margin-top: 2vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.win-sign-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #ffffffaa;
+    border-radius: 1vh;
+    opacity: 0;
+    z-index: -1;
+}
+
+.win-sign {
+    color: green;
+    font-size: xxx-large;
+    position: absolute;
+    font-family: MvWeekend, serif;
+}
+
+.show-win-sign {
+    z-index: 0;
+    opacity: 1;
+    animation: showWinSign 0.5s ease;
+}
+
+@keyframes showWinSign {
+    0% {
+        opacity: 0;
+        transform: scale(0.3);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

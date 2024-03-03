@@ -1,9 +1,15 @@
+.tile-container {
+    perspective: 1000px;
+}
+
 .tile {
-    transition: all 0.3s ease;
+    transition: all 0.1s ease;
     transform: scale(0.9);
     width: 10vh;
     height: 10vh;
     border-radius: 1vh;
+    transform-style: preserve-3d;
+    position: relative;
 }
 
 @media (hover: hover) {
@@ -16,4 +22,22 @@
     .tile:active {
         transform: scale(1);
     }
+}
+
+.front {
+    animation: flipOut 0.3s;
+}
+
+.back {
+    animation: flipIn 0.3s;
+}
+
+@keyframes flipIn {
+    0% {transform: rotateY(0deg);}
+    100% {transform: rotateY(180deg) scale(0.9);}
+}
+
+@keyframes flipOut {
+    0% {transform: rotateY(180deg);}
+    100% {transform: rotateY(0deg) scale(0.9);}
 }
