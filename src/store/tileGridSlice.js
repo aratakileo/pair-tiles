@@ -1,56 +1,43 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getTile} from "../util";
-import getRandColors from "../util/colorGenerator";
+import {getRandIndex} from "../util";
+import getRandBrightColors from "../util/colorGenerator";
+import {AXIS_TILES_COUNT} from "../util/constants";
+import {getTileInfo, isBacked, isFronted, isFrontedAndUnflippable, isTransientFronted, TileStatus} from "./tileInfo";
 
-export const TileState = {
-    DEFAULT: 'default',
-    FACED: 'faced',
-    LOCKED_AND_FACED: 'locked_and_faced',
-    FAIL_DEMO: 'fail_demo'
-};
-
-const getNewTileGridState = (tilesInLineCount) => {
-    const state = [];
-    const colorPalette = getRandColors(tilesInLineCount * tilesInLineCount / 2);
+const getNewTileInfos = () => {
+    const tileInfos = [];
+    const colorPalette = getRandBrightColors(AXIS_TILES_COUNT * AXIS_TILES_COUNT / 2);
     const colors = colorPalette.concat(colorPalette);
 
-    for (const column of Array(tilesInLineCount).keys())
-        for (const line of Array(tilesInLineCount).keys()) {
-            const colorIndex = Math.floor(Math.random() * colors.length);
+    for (const column of Array(AXIS_TILES_COUNT).keys())
+        for (const line of Array(AXIS_TILES_COUNT).keys()) {
+            const colorIndex = getRandIndex(colors.length);
 
-            state.push({
-                line,
-                column,
-                color: colors[colorIndex],
-                state: TileState.DEFAULT
-            });
-
+            tileInfos.push({line, column, color: colors[colorIndex], status: TileStatus.BACKED});
             colors.splice(colorIndex, 1);
         }
 
-    return state;
+    return tileInfos;
 };
 
 const tileGridSlice = createSlice({
     name: 'tileGrid',
     initialState: {
-        tiles: getNewTileGridState(4),
+        tileInfos: getNewTileInfos(),
         processingTilesPair: [],
-        roundsCount: 0,
-        facedAndLockedTilePairsCount: 0
+        triesCount: 0,
+        guessedCombinationsCount: 0
     },
     reducers: {
-        onTileSelect(state, action) {
+        onTileClick(state, action) {
             const tilePos = [action.payload.line, action.payload.column];
-            const tile = getTile(state.tiles, ...tilePos);
+            const tileInfo = getTileInfo(state.tileInfos, ...tilePos);
 
-            if (tile.state === TileState.LOCKED_AND_FACED || tile.state === TileState.FAIL_DEMO) return;
+            if (isFrontedAndUnflippable(tileInfo) || isTransientFronted(tileInfo)) return;
 
-            if (tile.state === TileState.FACED)
-                tile.state = TileState.DEFAULT;
-            else tile.state = TileState.FACED;
+            tileInfo.status = isFronted(tileInfo) ? TileStatus.BACKED : TileStatus.FRONTED;
 
-            if (tile.state === TileState.DEFAULT) {
+            if (isBacked(tileInfo)) {
                 state.processingTilesPair.splice(state.processingTilesPair.indexOf(tilePos), 1);
                 return;
             }
@@ -59,30 +46,30 @@ const tileGridSlice = createSlice({
 
             if (state.processingTilesPair.length < 2) return;
 
-            const firstTile = getTile(state.tiles, ...state.processingTilesPair[0]);
-            const secondTile = getTile(state.tiles, ...state.processingTilesPair[1]);
+            const firstTileInfo = getTileInfo(state.tileInfos, ...state.processingTilesPair[0]);
+            const secondTileInfo = getTileInfo(state.tileInfos, ...state.processingTilesPair[1]);
 
-            if (firstTile.color === secondTile.color) {
-                firstTile.state = TileState.LOCKED_AND_FACED;
-                secondTile.state = TileState.LOCKED_AND_FACED;
+            if (firstTileInfo.color === secondTileInfo.color) {
+                firstTileInfo.status = TileStatus.FRONTED_AND_UNFLIPPABLE;
+                secondTileInfo.status = TileStatus.FRONTED_AND_UNFLIPPABLE;
 
-                state.facedAndLockedTilePairsCount++;
+                state.guessedCombinationsCount++;
             } else {
-                firstTile.state = TileState.FAIL_DEMO;
-                secondTile.state = TileState.FAIL_DEMO;
+                firstTileInfo.status = TileStatus.TRANSIENT_FRONTED;
+                secondTileInfo.status = TileStatus.TRANSIENT_FRONTED;
 
-                state.roundsCount++;
+                state.triesCount++;
             }
 
             state.processingTilesPair = [];
         },
-        finishTileFailDemoState(state, action) {
-            const tile = getTile(state.tiles, action.payload.line, action.payload.column);
+        makeTileBacked(state, action) {
+            const tileInfo = getTileInfo(state.tileInfos, action.payload.line, action.payload.column);
 
-            tile.state = TileState.DEFAULT;
+            tileInfo.status = TileStatus.BACKED;
         }
     }
 });
 
 export default tileGridSlice.reducer;
-export const {onTileSelect, finishTileFailDemoState} = tileGridSlice.actions;
+export const {onTileClick, makeTileBacked} = tileGridSlice.actions;

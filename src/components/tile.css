@@ -24,20 +24,20 @@
     }
 }
 
-.front {
-    animation: flipOut 0.3s;
+.show-tile-front {
+    animation: tileFlipOut 0.3s;
 }
 
-.back {
-    animation: flipIn 0.3s;
+.show-tile-back {
+    animation: tileFlipIn 0.3s;
 }
 
-@keyframes flipIn {
+@keyframes tileFlipIn {
     0% {transform: rotateY(0deg);}
     100% {transform: rotateY(180deg) scale(0.9);}
 }
 
-@keyframes flipOut {
+@keyframes tileFlipOut {
     0% {transform: rotateY(180deg);}
     100% {transform: rotateY(0deg) scale(0.9);}
 }

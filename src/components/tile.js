@@ -1,30 +1,39 @@
 import {useDispatch, useSelector} from "react-redux";
-import {onTileSelect, finishTileFailDemoState, TileState} from "../store/tileGridSlice";
-import {dispatchAction, getTile} from "../util";
+import {onTileClick, makeTileBacked} from "../store/tileGridSlice";
+import {dispatchAction} from "../util";
 import './tile.css'
 import {useEffect} from "react";
+import {getTileInfo, isBacked, isTransientFronted} from "../store/tileInfo";
 
 const Tile = ({color, line, column}) => {
     const dispatch = useDispatch();
-    const tiles = useSelector(state => state.tileGrid.tiles);
-    const tile = getTile(tiles, line, column);
-    const className = 'tile ' + (tile.state !== TileState.DEFAULT ? 'front' : 'back');
+    const tileInfos = useSelector(state => state.tileGrid.tileInfos);
+    const tileInfo = getTileInfo(tileInfos, line, column);
 
     useEffect(() => {
-        if (tile.state !== TileState.FAIL_DEMO) return undefined;
+        if (!isTransientFronted(tileInfo)) return undefined;
 
         const timeOutId = setTimeout(() => {
-            dispatchAction(finishTileFailDemoState, {line, column});
+            /*
+             *
+             * The tile status is changed in this way
+             * because the state values cannot be changed outside the redux store actions
+             *
+             */
+            dispatchAction(makeTileBacked, {line, column});
         }, 500);
 
         return () => clearTimeout(timeOutId);
-    }, [line, column, tile.state]);
+    }, [line, column, tileInfo]);
+
+    const isFronted = !isBacked(tileInfo);
 
     return (
         <div className='tile-container'>
-            <div className={className} style={{
-                backgroundColor: tile.state !== TileState.DEFAULT ? color : '#ffffff'
-            }} onClick={() => dispatch(onTileSelect({line, column}))}/>
+            <div className={'tile show-tile-' + (isFronted ? 'front' : 'back')}
+                 style={{backgroundColor: isFronted ? color : '#ffffff'}}
+                 onClick={() => dispatch(onTileClick({line, column}))}
+            />
         </div>
     );
 }

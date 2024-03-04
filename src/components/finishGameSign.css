@@ -1,0 +1,28 @@
+
+
+.finish-game-sign-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    background-color: #ffffff88;
+    border-radius: 1vh;
+    animation: showFinishGameSignContainer 1s ease;
+}
+
+.finish-game-sign {
+    color: green;
+    font-size: xxx-large;
+    position: absolute;
+    font-family: Oswald, serif;
+}
+
+@keyframes showFinishGameSignContainer {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}

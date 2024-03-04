@@ -1,14 +1,15 @@
 import TileGrid from './components/tileGrid';
 import {useSelector} from "react-redux";
-import './root.css';
 
 const App = () => {
-    const roundsCount = useSelector(state => state.tileGrid.roundsCount);
+    const triesCount = useSelector(state => state.tileGrid.triesCount);
 
     return (
-        <div className='root'>
+        <div className='App'>
             <TileGrid/>
-            <p style={{color: 'white', marginLeft: '1vh'}}><b>Rounds: {roundsCount}</b></p>
+            <p style={{color: 'white', marginLeft: '1vh'}}>
+                <b>Tries: {triesCount}</b>
+            </p>
         </div>
     );
 }
