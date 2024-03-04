@@ -1,23 +1,33 @@
-
-
-.finish-game-sign-container {
+.finish-game-sign {
+    padding: 1.3vh;
     display: flex;
     justify-content: center;
     align-items: center;
     position: absolute;
-    background-color: #ffffff88;
-    border-radius: 1vh;
-    animation: showFinishGameSignContainer 1s ease;
+    background-color: #16191c54;
+    animation: showFinishGameSign 1s ease;
 }
 
-.finish-game-sign {
-    color: green;
+.finish-game-sign-content {
+    text-align: center;
+}
+
+.finish-game-sign-title {
+    color: #4caf50;
     font-size: xxx-large;
-    position: absolute;
     font-family: Oswald, serif;
+    padding: 0;
+    margin: 0;
 }
 
-@keyframes showFinishGameSignContainer {
+.finish-game-sign-score {
+    color: #FFBF00;
+    font-size: large;
+    padding: 0;
+    margin: 0;
+}
+
+@keyframes showFinishGameSign {
     0% {
         opacity: 0;
     }

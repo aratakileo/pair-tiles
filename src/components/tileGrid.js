@@ -23,9 +23,7 @@ const TileGrid = () => {
                 placeItems: 'center',
                 gridTemplateColumns: `repeat(${AXIS_TILES_COUNT}, 1fr)`,
                 gridTemplateRows: `repeat(${AXIS_TILES_COUNT}, 1fr)`,
-                gap: CSS_GRID_GAP,
-                padding: CSS_GRID_GAP,
-                width: CSS_GRID_SIZE,
+                gap: CSS_GRID_GAP
             }}>{tiles}</div>
             {isGameFinished ? <FinishGameSign/> : null}
         </div>
