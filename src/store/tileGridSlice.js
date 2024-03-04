@@ -20,14 +20,12 @@ const getNewTileInfos = () => {
     return tileInfos;
 };
 
-const getNewState = () => {
-    return {
-        tileInfos: getNewTileInfos(),
-            processingTilesPair: [],
-            triesCount: 0,
-            guessedCombinationsCount: 0
-    };
-};
+const getNewState = () => ({
+    tileInfos: getNewTileInfos(),
+    processingTilesPair: [],
+    triesCount: 0,
+    guessedCombinationsCount: 0
+});
 
 const tileGridSlice = createSlice({
     name: 'tileGrid',
@@ -73,10 +71,15 @@ const tileGridSlice = createSlice({
             tileInfo.status = TileStatus.BACKED;
         },
         restartGame(state, action) {
+            // If an action returns a value, then that value becomes a new state
             return getNewState();
         }
     }
 });
 
 export default tileGridSlice.reducer;
-export const {onTileClick, makeTileBacked, restartGame} = tileGridSlice.actions;
+export const {
+    onTileClick,
+    makeTileBacked,
+    restartGame
+} = tileGridSlice.actions;

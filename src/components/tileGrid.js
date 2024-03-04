@@ -1,7 +1,7 @@
 import Tile from './tile'
 import {useSelector} from "react-redux";
 import './tileGrid.css'
-import {CSS_GRID_GAP, CSS_GRID_SIZE, AXIS_TILES_COUNT} from "../util/constants";
+import {CSS_GRID_GAP, AXIS_TILES_COUNT} from "../util/constants";
 import FinishGameSign from "./finishGameSign";
 
 const TileGrid = () => {
