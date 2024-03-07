@@ -3,6 +3,7 @@
     transform: rotate(0deg) scale(0.8);
     width: 5vh;
     height: 5vh;
+    user-select: none;
 }
 
 @media (hover: hover) {

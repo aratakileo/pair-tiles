@@ -11,9 +11,9 @@ const FinishGameSign = () => {
             className='finish-game-sign center-horizontal-content'
             style={{width: CSS_GRID_SIZE, height: CSS_GRID_SIZE}}
         >
-            <div className='finish-game-sign-content'>
-                <p className='finish-game-sign-title'><b>YOU WIN!</b></p>
-                <p className='finish-game-sign-score'><b>Total tries: {triesCount}</b></p>
+            <div style={{textAlign: 'center'}}>
+                <p className='finish-game-title'><b>YOU WIN!</b></p>
+                <p className='finish-game-score'><b>Total tries: {triesCount}</b></p>
                 <br/>
                 <PlayAgainButton/>
             </div>

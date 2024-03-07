@@ -1,12 +1,12 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getRandIndex, getTileIconPath} from "../util";
 import getRandBrightColors from "../util/colorGenerator";
-import {AXIS_TILES_COUNT} from "../util/constants";
+import {AXIS_TILES_COUNT, TILE_PAIRS_COUNT} from "../util/constants";
 import {getTileInfo, isBacked, isFronted, isFrontedAndUnflippable, isTransientFronted, TileStatus} from "./tileInfo";
 
 const getNewTileInfos = () => {
     const tileInfos = [];
-    const tileStylePalette = getRandBrightColors(AXIS_TILES_COUNT * AXIS_TILES_COUNT / 2).map(
+    const tileStylePalette = getRandBrightColors(TILE_PAIRS_COUNT).map(
         (color, index) => ({color, icon: getTileIconPath(index)})
     );
     const tileStyles = tileStylePalette.concat(tileStylePalette);

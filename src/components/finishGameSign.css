@@ -5,11 +5,7 @@
     animation: showFinishGameSign 1s ease;
 }
 
-.finish-game-sign-content {
-    text-align: center;
-}
-
-.finish-game-sign-title {
+.finish-game-title {
     color: #4caf50;
     font-size: xxx-large;
     font-family: Oswald, serif;
@@ -17,7 +13,7 @@
     margin: 0;
 }
 
-.finish-game-sign-score {
+.finish-game-score {
     color: var(--accent-color);
     font-size: large;
     padding: 0;
