@@ -4,6 +4,7 @@
     width: 5vh;
     height: 5vh;
     user-select: none;
+    fill: white;
 }
 
 @media (hover: hover) {

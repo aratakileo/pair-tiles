@@ -22,12 +22,13 @@ const getNewTileInfos = () => {
     return tileInfos;
 };
 
-const getNewState = (altModeEnabled = false) => ({
+const getNewState = (altMode = false, selectedPairsDisappearance = true) => ({
     tileInfos: getNewTileInfos(),
     processingTilesPair: [],
     triesCount: 0,
     guessedCombinationsCount: 0,
-    altModeEnabled
+    altMode,
+    selectedPairsDisappearance
 });
 
 const tileGridSlice = createSlice({
@@ -75,10 +76,13 @@ const tileGridSlice = createSlice({
         },
         restartGame(state, action) {
             // If an action returns a value, then that value becomes a new state
-            return getNewState(state.altModeEnabled);
+            return getNewState(state.altMode, state.selectedPairsDisappearance);
         },
         toggleAltMode(state, action) {
-            state.altModeEnabled = !state.altModeEnabled;
+            state.altMode = !state.altMode;
+        },
+        toggleSelectedPairsDisappearance(state, action) {
+            state.selectedPairsDisappearance = !state.selectedPairsDisappearance;
         }
     }
 });
@@ -88,5 +92,6 @@ export const {
     onTileClick,
     makeTileBacked,
     restartGame,
-    toggleAltMode
+    toggleAltMode,
+    toggleSelectedPairsDisappearance
 } = tileGridSlice.actions;
