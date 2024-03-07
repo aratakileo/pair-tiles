@@ -3,7 +3,7 @@ import Footer from "./components/footer";
 import './App.css';
 import CustomCheckbox from "./components/customCheckbox";
 import {useDispatch, useSelector} from "react-redux";
-import {toggleAltMode, toggleSelectedPairsDisappearance} from "./store/tileGridSlice";
+import {toggleAltModeEnabled, toggleSelectedPairsDisappearanceEnabled} from "./store/tileGridSlice";
 
 const App = () => {
     const tileGridState = useSelector(state => state.tileGrid);
@@ -17,13 +17,13 @@ const App = () => {
                     <CustomCheckbox
                         caption="Alternative mode (if it's hard to distinguish colors)"
                         checked={tileGridState.altMode}
-                        onClick={() => dispatch(toggleAltMode())}
+                        onClick={() => dispatch(toggleAltModeEnabled())}
                         style={{marginTop: '2vh'}}
                     />
                     <CustomCheckbox
                         caption='Make the selected pairs disappear'
                         checked={tileGridState.selectedPairsDisappearance}
-                        onClick={() => dispatch(toggleSelectedPairsDisappearance())}
+                        onClick={() => dispatch(toggleSelectedPairsDisappearanceEnabled())}
                     />
                 </div>
             </div>

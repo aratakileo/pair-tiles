@@ -78,10 +78,10 @@ const tileGridSlice = createSlice({
             // If an action returns a value, then that value becomes a new state
             return getNewState(state.altMode, state.selectedPairsDisappearance);
         },
-        toggleAltMode(state, action) {
+        toggleAltModeEnabled(state, action) {
             state.altMode = !state.altMode;
         },
-        toggleSelectedPairsDisappearance(state, action) {
+        toggleSelectedPairsDisappearanceEnabled(state, action) {
             state.selectedPairsDisappearance = !state.selectedPairsDisappearance;
         }
     }
@@ -92,6 +92,6 @@ export const {
     onTileClick,
     makeTileBacked,
     restartGame,
-    toggleAltMode,
-    toggleSelectedPairsDisappearance
+    toggleAltModeEnabled,
+    toggleSelectedPairsDisappearanceEnabled
 } = tileGridSlice.actions;
