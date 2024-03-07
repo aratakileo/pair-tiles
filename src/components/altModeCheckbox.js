@@ -11,7 +11,7 @@ const AltModeCheckbox = () => {
 
     return (
         <div
-            className='alt-mode-checkbox-container'
+            className='alt-mode-checkbox-container center-horizontal-content'
             onClick={() => dispatch(toggleAltMode())}
         >
             <div className={checkboxClassName}/>

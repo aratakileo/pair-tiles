@@ -1,6 +1,5 @@
 import Tile from './tile'
 import {useSelector} from "react-redux";
-import './tileGrid.css'
 import {CSS_GRID_GAP, AXIS_TILES_COUNT} from "../util/constants";
 import FinishGameSign from "./finishGameSign";
 
@@ -16,7 +15,7 @@ const TileGrid = () => {
     );
 
     return (
-        <div className='tile-grid-container'>
+        <div className='center-horizontal-content' style={{margin: '2vh 0 2vh 0'}}>
             <div className={isGameFinished ? 'tile-grid-blur' : ''} style={{
                 display: 'grid',
                 placeItems: 'center',

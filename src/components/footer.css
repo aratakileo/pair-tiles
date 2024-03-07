@@ -1,0 +1,15 @@
+.footer-container {
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-logo {
+    width: 1.5rem;
+    height: 1.5rem;
+    margin-right: 0.3rem;
+}
+
+.footer-text {
+    color: #848d97;
+}

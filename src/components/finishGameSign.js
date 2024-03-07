@@ -8,7 +8,7 @@ const FinishGameSign = () => {
 
     return (
         <div
-            className='finish-game-sign'
+            className='finish-game-sign center-horizontal-content'
             style={{width: CSS_GRID_SIZE, height: CSS_GRID_SIZE}}
         >
             <div className='finish-game-sign-content'>

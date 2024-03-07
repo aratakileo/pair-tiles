@@ -1,8 +1,5 @@
 .finish-game-sign {
     padding: 1.3vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: absolute;
     background-color: #16191c54;
     animation: showFinishGameSign 1s ease;

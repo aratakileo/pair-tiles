@@ -8,3 +8,14 @@
 body {
     background-color: var(--bg-color);
 }
+
+.center-horizontal-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.tile-grid-blur {
+    filter: blur(1.2vh);
+    animation: 1s ease;
+}
