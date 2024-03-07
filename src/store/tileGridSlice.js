@@ -1,30 +1,33 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getRandIndex} from "../util";
+import {getRandIndex, getTileIconPath} from "../util";
 import getRandBrightColors from "../util/colorGenerator";
 import {AXIS_TILES_COUNT} from "../util/constants";
 import {getTileInfo, isBacked, isFronted, isFrontedAndUnflippable, isTransientFronted, TileStatus} from "./tileInfo";
 
 const getNewTileInfos = () => {
     const tileInfos = [];
-    const colorPalette = getRandBrightColors(AXIS_TILES_COUNT * AXIS_TILES_COUNT / 2);
-    const colors = colorPalette.concat(colorPalette);
+    const tileStylePalette = getRandBrightColors(AXIS_TILES_COUNT * AXIS_TILES_COUNT / 2).map(
+        (color, index) => ({color, icon: getTileIconPath(index)})
+    );
+    const tileStyles = tileStylePalette.concat(tileStylePalette);
 
     for (const column of Array(AXIS_TILES_COUNT).keys())
         for (const line of Array(AXIS_TILES_COUNT).keys()) {
-            const colorIndex = getRandIndex(colors.length);
+            const colorIndex = getRandIndex(tileStyles.length);
 
-            tileInfos.push({line, column, color: colors[colorIndex], status: TileStatus.BACKED});
-            colors.splice(colorIndex, 1);
+            tileInfos.push({line, column, style: tileStyles[colorIndex], status: TileStatus.BACKED});
+            tileStyles.splice(colorIndex, 1);
         }
 
     return tileInfos;
 };
 
-const getNewState = () => ({
+const getNewState = (altModeEnabled = false) => ({
     tileInfos: getNewTileInfos(),
     processingTilesPair: [],
     triesCount: 0,
-    guessedCombinationsCount: 0
+    guessedCombinationsCount: 0,
+    altModeEnabled
 });
 
 const tileGridSlice = createSlice({
@@ -51,7 +54,7 @@ const tileGridSlice = createSlice({
             const firstTileInfo = getTileInfo(state.tileInfos, ...state.processingTilesPair[0]);
             const secondTileInfo = getTileInfo(state.tileInfos, ...state.processingTilesPair[1]);
 
-            if (firstTileInfo.color === secondTileInfo.color) {
+            if (firstTileInfo.style.color === secondTileInfo.style.color) {
                 firstTileInfo.status = TileStatus.FRONTED_AND_UNFLIPPABLE;
                 secondTileInfo.status = TileStatus.FRONTED_AND_UNFLIPPABLE;
 
@@ -72,7 +75,10 @@ const tileGridSlice = createSlice({
         },
         restartGame(state, action) {
             // If an action returns a value, then that value becomes a new state
-            return getNewState();
+            return getNewState(state.altModeEnabled);
+        },
+        toggleAltMode(state, action) {
+            state.altModeEnabled = !state.altModeEnabled;
         }
     }
 });
@@ -81,5 +87,6 @@ export default tileGridSlice.reducer;
 export const {
     onTileClick,
     makeTileBacked,
-    restartGame
+    restartGame,
+    toggleAltMode
 } = tileGridSlice.actions;

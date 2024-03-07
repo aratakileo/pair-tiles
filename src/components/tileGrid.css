@@ -1,5 +1,5 @@
 .tile-grid-container {
-    margin-top: 2vh;
+    margin: 2vh 0 2vh 0;
     display: flex;
     justify-content: center;
     align-items: center;

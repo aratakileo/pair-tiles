@@ -9,7 +9,6 @@ const TileGrid = () => {
     const isGameFinished = tileGridState.guessedCombinationsCount * 2 === tileGridState.tileInfos.length;
     const tiles = tileGridState.tileInfos.map(
         tileInfo => <Tile
-            color={tileInfo.color}
             line={tileInfo.line}
             column={tileInfo.column}
             key={`${tileInfo.line}:${tileInfo.column}`}  // React recommends adding this parameter

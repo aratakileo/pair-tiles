@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=Oswald:wght@200..700&display=swap');
+
+:root {
+    --accent-color: #FFBF00;
+    --bg-color: #16191c;
+}
+
+body {
+    background-color: var(--bg-color);
+}
