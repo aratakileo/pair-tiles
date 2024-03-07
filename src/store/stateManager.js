@@ -22,7 +22,7 @@ const getNewTileInfos = () => {
 };
 
 export const getNewState = (
-    bestTriesCount = 0,
+    bestTriesCount = Number.MAX_SAFE_INTEGER,
     altMode = false,
     selectedPairsDisappearance = true
 ) => ({
