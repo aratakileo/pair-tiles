@@ -10,6 +10,9 @@ export const TileStatus = {
     FRONTED: 'fronted',
     /**
      * Means that the color (image) of the tile is shown and the tile can no longer be clicked by the user.
+     * Depending on the settings (parameter: {@link selectedPairsDisappearance}), it may also be that instead
+     * of the previously described behavior, the tile will simply disappear.
+     *
      * It is the final status.
      * Replaces {@link TileStatus.FRONTED} of two identical tiles at the moment when the user selected such tiles.
      */
