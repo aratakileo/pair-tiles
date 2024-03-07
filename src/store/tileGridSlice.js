@@ -1,6 +1,7 @@
 import {createSlice} from "@reduxjs/toolkit";
 import {getTileInfo, isBacked, isFronted, isFrontedAndUnflippable, isTransientFronted, TileStatus} from "./tileInfo";
 import {getLoadedState, getNewState, saveState} from "./stateManager";
+import {TILE_PAIRS_COUNT} from "../util/constants";
 
 const tileGridSlice = createSlice({
     name: 'tileGrid',
@@ -42,10 +43,17 @@ const tileGridSlice = createSlice({
                 firstTileInfo.status = TileStatus.TRANSIENT_FRONTED;
                 secondTileInfo.status = TileStatus.TRANSIENT_FRONTED;
 
-                state.triesCount++;
+                state.triesCount.current++;
             }
 
             state.processingTilesPair = [];
+
+            if (state.guessedCombinationsCount === TILE_PAIRS_COUNT) {
+                state.gameFinished = true;
+                state.triesCount.newRecord = state.triesCount.current < state.triesCount.best;
+
+                if (state.triesCount.newRecord) state.triesCount.best = state.triesCount.current;
+            }
 
             saveState(state);
         },
@@ -57,7 +65,7 @@ const tileGridSlice = createSlice({
             saveState(state);
         },
         restartGame(state, action) {
-            const newState = getNewState(state.altMode, state.selectedPairsDisappearance);
+            const newState = getNewState(state.triesCount.best, state.altMode, state.selectedPairsDisappearance);
 
             saveState(newState);
 

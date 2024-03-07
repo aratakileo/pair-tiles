@@ -5,8 +5,7 @@ import FinishGameSign from "./finishGameSign";
 
 const TileGrid = () => {
     const tileGridState = useSelector(state => state.tileGrid);
-    const isGameFinished = tileGridState.guessedCombinationsCount * 2 === tileGridState.tileInfos.length;
-    const blurGrid = isGameFinished && !tileGridState.selectedPairsDisappearance;
+    const blurGrid = tileGridState.gameFinished && !tileGridState.selectedPairsDisappearance;
     const tiles = tileGridState.tileInfos.map(
         tileInfo => <Tile
             line={tileInfo.line}
@@ -24,7 +23,7 @@ const TileGrid = () => {
                 gridTemplateRows: `repeat(${AXIS_TILES_COUNT}, 1fr)`,
                 gap: CSS_GRID_GAP
             }}>{tiles}</div>
-            {isGameFinished ? <FinishGameSign/> : null}
+            {tileGridState.gameFinished ? <FinishGameSign/> : null}
         </div>
     );
 }

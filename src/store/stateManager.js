@@ -21,11 +21,20 @@ const getNewTileInfos = () => {
     return tileInfos;
 };
 
-export const getNewState = (altMode = false, selectedPairsDisappearance = true) => ({
+export const getNewState = (
+    bestTriesCount = 0,
+    altMode = false,
+    selectedPairsDisappearance = true
+) => ({
     tileInfos: getNewTileInfos(),
     processingTilesPair: [],
-    triesCount: 0,
+    triesCount: {
+        current: 0,
+        best: bestTriesCount,
+        newRecord: false
+    },
     guessedCombinationsCount: 0,
+    gameFinished: false,
     altMode,
     selectedPairsDisappearance
 });
@@ -37,5 +46,6 @@ export const saveState = (state) => {
 export const getLoadedState = () => {
     const loadedState = localStorage.getItem('tileGridState');
 
-    return loadedState == null ? getNewState() : JSON.parse(loadedState);
+    // `Object.assign(...)` is used to migrate to new state format in case if it is necessary
+    return loadedState == null ? getNewState() : Object.assign(getNewState(), JSON.parse(loadedState));
 };

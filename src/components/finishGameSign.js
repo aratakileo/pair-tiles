@@ -26,9 +26,11 @@ const FinishGameSign = () => {
             style={signStyle}
         >
             <div style={{textAlign: 'center'}}>
-                <p className='finish-game-title'><b>YOU WIN!</b></p>
+                <p className='finish-game-title'>
+                    <b>{tileGridState.triesCount.newRecord ? 'NEW RECORD' : 'YOU WIN'}!</b>
+                </p>
                 <p className='finish-game-score'>
-                    <b>Total tries: {tileGridState.triesCount}</b>
+                    <b>Total tries: {tileGridState.triesCount.current}</b>
                 </p>
                 <br/>
                 <PlayAgainButton/>
