@@ -1,8 +1,8 @@
 .finish-game-sign {
-    padding: 1.3vh;
     position: absolute;
     background-color: #16191c54;
     animation: showFinishGameSign 1s ease;
+    border-radius: 1vh;
 }
 
 .finish-game-title {
@@ -14,7 +14,7 @@
 }
 
 .finish-game-score {
-    color: var(--accent-color);
+    color: var(--secondary-color);
     font-size: large;
     padding: 0;
     margin: 0;

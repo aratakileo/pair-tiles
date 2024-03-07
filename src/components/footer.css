@@ -11,5 +11,5 @@
 }
 
 .footer-text {
-    color: #848d97;
+    color: var(--secondary-color);
 }

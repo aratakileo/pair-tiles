@@ -3,7 +3,7 @@ import {onTileClick, makeTileBacked} from "../store/tileGridSlice";
 import {dispatchAction} from "../util";
 import './tile.css'
 import {useEffect} from "react";
-import {getTileInfo, isBacked, isTransientFronted} from "../store/tileInfo";
+import {getTileInfo, isBacked, isFrontedAndUnflippable, isTransientFronted} from "../store/tileInfo";
 
 const Tile = ({line, column}) => {
     const dispatch = useDispatch();
@@ -27,7 +27,11 @@ const Tile = ({line, column}) => {
     }, [line, column, tileInfo]);
 
     const isFronted = !isBacked(tileInfo);
-    const showTileIcon = isFronted && tileGridState.altModeEnabled;
+    const showTileIcon = isFronted && tileGridState.altMode;
+    const makeTileDisappear = isFrontedAndUnflippable(tileInfo) && tileGridState.selectedPairsDisappearance;
+    const tileClassName = `tile show-tile-${isFronted ? 'front' : 'back'} ` + (
+        makeTileDisappear ? 'make-tile-disappear' : 'hovering-tile'
+    );
 
     let tileBgColor = '#ffffff';
 
@@ -35,7 +39,7 @@ const Tile = ({line, column}) => {
 
     return (
         <div className='tile-container'>
-            <div className={'tile show-tile-' + (isFronted ? 'front' : 'back')}
+            <div className={tileClassName}
                  style={{backgroundColor: tileBgColor}}
                  onClick={() => dispatch(onTileClick({line, column}))}
             >

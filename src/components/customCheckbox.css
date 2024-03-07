@@ -1,24 +1,25 @@
-.alt-mode-checkbox-container {
-    margin: 5vh;
+.custom-checkbox-container {
+    margin: 1vh;
     transition: all 0.1s ease;
     user-select: none;
+    display: flex;
 }
 
-.alt-mode-checkbox {
+.custom-checkbox {
     transition: all 0.3s ease-in-out;
     border: 0.3vh solid var(--accent-color);
     border-radius: 0.3vh;
-    width: 1rem;
-    height: 1rem;
+    width: 2vh;
+    height: 2vh;
 }
 
-.alt-mode-checkbox-checked {
+.custom-checkbox-checked {
     transform: rotate(180deg);
     background-color: var(--accent-color);
 }
 
 @media (hover: hover) {
-    .alt-mode-checkbox-container:hover {
+    .custom-checkbox-container:hover {
         transform: scale(1.1);
     }
 }
