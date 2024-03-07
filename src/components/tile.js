@@ -5,10 +5,10 @@ import './tile.css'
 import {useEffect} from "react";
 import {getTileInfo, isBacked, isTransientFronted} from "../store/tileInfo";
 
-const Tile = ({color, line, column}) => {
+const Tile = ({line, column}) => {
     const dispatch = useDispatch();
-    const tileInfos = useSelector(state => state.tileGrid.tileInfos);
-    const tileInfo = getTileInfo(tileInfos, line, column);
+    const tileGridState = useSelector(state => state.tileGrid);
+    const tileInfo = getTileInfo(tileGridState.tileInfos, line, column);
 
     useEffect(() => {
         if (!isTransientFronted(tileInfo)) return undefined;
@@ -27,13 +27,20 @@ const Tile = ({color, line, column}) => {
     }, [line, column, tileInfo]);
 
     const isFronted = !isBacked(tileInfo);
+    const showTileIcon = isFronted && tileGridState.altModeEnabled;
+
+    let tileBgColor = '#ffffff';
+
+    if (isFronted) tileBgColor = showTileIcon ? 'var(--accent-color)' : tileInfo.style.color;
 
     return (
         <div className='tile-container'>
             <div className={'tile show-tile-' + (isFronted ? 'front' : 'back')}
-                 style={{backgroundColor: isFronted ? color : '#ffffff'}}
+                 style={{backgroundColor: tileBgColor}}
                  onClick={() => dispatch(onTileClick({line, column}))}
-            />
+            >
+                {showTileIcon ? <img className='tile-icon' src={tileInfo.style.icon} alt='tile icon'/> : null}
+            </div>
         </div>
     );
 }

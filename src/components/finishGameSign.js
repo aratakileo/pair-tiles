@@ -7,7 +7,10 @@ const FinishGameSign = () => {
     const triesCount = useSelector(state => state.tileGrid.triesCount);
 
     return (
-        <div className='finish-game-sign' style={{width: CSS_GRID_SIZE, height: CSS_GRID_SIZE}}>
+        <div
+            className='finish-game-sign'
+            style={{width: CSS_GRID_SIZE, height: CSS_GRID_SIZE}}
+        >
             <div className='finish-game-sign-content'>
                 <p className='finish-game-sign-title'><b>YOU WIN!</b></p>
                 <p className='finish-game-sign-score'><b>Total tries: {triesCount}</b></p>

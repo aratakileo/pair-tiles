@@ -24,6 +24,17 @@
     }
 }
 
+.tile-icon {
+    width: 8vh;
+    height: 8vh;
+    padding: 1vh;
+    user-select: none;
+}
+
+.tile-icon-svg {
+    fill: var(--bg-color);
+}
+
 .show-tile-front {
     animation: tileFlipOut 0.3s;
 }
