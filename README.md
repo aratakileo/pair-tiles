@@ -3,7 +3,7 @@
 ![](preview.png)
 
 To win this game, you need to select all pairs of tiles.
-This game is powered by [React](https://github.com/facebook/create-react-app).
+This game is powered by [React](https://github.com/facebook/create-react-app) mainly for mobile.
 
 ### Run project locally
 In the project directory, you can run `npm start`.
