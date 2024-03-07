@@ -1,56 +1,34 @@
 import {createSlice} from "@reduxjs/toolkit";
-import {getRandIndex, getTileIconPath} from "../util";
-import getRandBrightColors from "../util/colorGenerator";
-import {AXIS_TILES_COUNT, TILE_PAIRS_COUNT} from "../util/constants";
 import {getTileInfo, isBacked, isFronted, isFrontedAndUnflippable, isTransientFronted, TileStatus} from "./tileInfo";
-
-const getNewTileInfos = () => {
-    const tileInfos = [];
-    const tileStylePalette = getRandBrightColors(TILE_PAIRS_COUNT).map(
-        (color, index) => ({color, icon: getTileIconPath(index)})
-    );
-    const tileStyles = tileStylePalette.concat(tileStylePalette);
-
-    for (const column of Array(AXIS_TILES_COUNT).keys())
-        for (const line of Array(AXIS_TILES_COUNT).keys()) {
-            const colorIndex = getRandIndex(tileStyles.length);
-
-            tileInfos.push({line, column, style: tileStyles[colorIndex], status: TileStatus.BACKED});
-            tileStyles.splice(colorIndex, 1);
-        }
-
-    return tileInfos;
-};
-
-const getNewState = (altMode = false, selectedPairsDisappearance = true) => ({
-    tileInfos: getNewTileInfos(),
-    processingTilesPair: [],
-    triesCount: 0,
-    guessedCombinationsCount: 0,
-    altMode,
-    selectedPairsDisappearance
-});
+import {getLoadedState, getNewState, saveState} from "./stateManager";
 
 const tileGridSlice = createSlice({
     name: 'tileGrid',
-    initialState: getNewState(),
+    initialState: getLoadedState(),
     reducers: {
         onTileClick(state, action) {
             const tilePos = [action.payload.line, action.payload.column];
             const tileInfo = getTileInfo(state.tileInfos, ...tilePos);
 
-            if (isFrontedAndUnflippable(tileInfo) || isTransientFronted(tileInfo)) return;
+            if (isFrontedAndUnflippable(tileInfo) || isTransientFronted(tileInfo)) {
+                saveState(state);
+                return;
+            }
 
             tileInfo.status = isFronted(tileInfo) ? TileStatus.BACKED : TileStatus.FRONTED;
 
             if (isBacked(tileInfo)) {
                 state.processingTilesPair.splice(state.processingTilesPair.indexOf(tilePos), 1);
+                saveState(state);
                 return;
             }
 
             state.processingTilesPair.push(tilePos);
 
-            if (state.processingTilesPair.length < 2) return;
+            if (state.processingTilesPair.length < 2) {
+                saveState(state);
+                return;
+            }
 
             const firstTileInfo = getTileInfo(state.tileInfos, ...state.processingTilesPair[0]);
             const secondTileInfo = getTileInfo(state.tileInfos, ...state.processingTilesPair[1]);
@@ -68,21 +46,32 @@ const tileGridSlice = createSlice({
             }
 
             state.processingTilesPair = [];
+
+            saveState(state);
         },
         makeTileBacked(state, action) {
             const tileInfo = getTileInfo(state.tileInfos, action.payload.line, action.payload.column);
 
             tileInfo.status = TileStatus.BACKED;
+
+            saveState(state);
         },
         restartGame(state, action) {
-            // If an action returns a value, then that value becomes a new state
-            return getNewState(state.altMode, state.selectedPairsDisappearance);
+            const newState = getNewState(state.altMode, state.selectedPairsDisappearance);
+
+            saveState(newState);
+
+            return newState; // If an action returns a value, then that value becomes a new state
         },
         toggleAltModeEnabled(state, action) {
             state.altMode = !state.altMode;
+
+            saveState(state);
         },
         toggleSelectedPairsDisappearanceEnabled(state, action) {
             state.selectedPairsDisappearance = !state.selectedPairsDisappearance;
+
+            saveState(state);
         }
     }
 });
