@@ -19,6 +19,6 @@
 
 @media (hover: hover) {
     .alt-mode-checkbox-container:hover {
-        transform: scale(1.2);
+        transform: scale(1.1);
     }
 }
