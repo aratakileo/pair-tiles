@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/aratakileo/pair-tiles/static/css/main.3fb3aa6d.css",
+    "main.js": "/aratakileo/pair-tiles/static/js/main.7446d862.js",
+    "static/js/453.0bddac43.chunk.js": "/aratakileo/pair-tiles/static/js/453.0bddac43.chunk.js",
+    "index.html": "/aratakileo/pair-tiles/index.html",
+    "main.3fb3aa6d.css.map": "/aratakileo/pair-tiles/static/css/main.3fb3aa6d.css.map",
+    "main.7446d862.js.map": "/aratakileo/pair-tiles/static/js/main.7446d862.js.map",
+    "453.0bddac43.chunk.js.map": "/aratakileo/pair-tiles/static/js/453.0bddac43.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.3fb3aa6d.css",
+    "static/js/main.7446d862.js"
+  ]
+}
