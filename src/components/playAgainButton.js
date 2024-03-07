@@ -6,7 +6,7 @@ const PlayAgainButton = () => {
     const dispatcher = useDispatch();
     return <img
         className='play-again-btn'
-        src='/refresh.svg'
+        src='refresh.svg'
         alt='refresh button'
         onClick={() => dispatcher(restartGame())}
     />

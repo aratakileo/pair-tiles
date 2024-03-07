@@ -11,7 +11,7 @@ export const dispatchAction = (action, payload) => store.dispatch(
 );
 
 export const getTileIconPath = (index) => {
-    return `/tile-icons/icon-${index}.svg`;
+    return `tile-icons/icon-${index}.svg`;
 };
 
 export const newIndexArray = (length) => {
