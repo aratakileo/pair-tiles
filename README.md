@@ -2,7 +2,7 @@
 
 ![](preview.png)
 
-To win this game, you need to select all pairs of tiles.
+My first try of React. To win this game, you need to select all pairs of tiles.
 This game is powered by [React](https://github.com/facebook/create-react-app) mainly for mobile.
 
 ### Run project locally
